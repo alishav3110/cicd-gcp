@@ -1,12 +1,12 @@
 steps:
 # Build Docker image
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us-central1-docker.pkg.dev/<your_project_id>/gke-repo/quickstart-image', './app1' ]
+- name: 'cicd-app'
+  args: ['build', '-t', 'us-central1-docker.pkg.dev/black-cirrus-461305-f6/cicd-app', './app' ]
   id: 'Build Docker Image'
 
 # Push image to Artifact Registry
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us-central1-docker.pkg.dev/<your_project_id>/gke-repo/quickstart-image' ]
+- name: 'cicd-app'
+  args: ['push', 'us-central1-docker.pkg.dev/black-cirrus-461305-f6/cicd-app' ]
   id: 'Push Docker Image'
 
 # Create Cloud Deploy release
