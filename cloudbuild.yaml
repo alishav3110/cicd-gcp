@@ -1,5 +1,5 @@
 steps:
-# Build Docker image
+# Build Docker image 
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/black-cirrus-461305-f6/cicd-gcp:latest', './app' ]
   id: 'Build Docker Image'
