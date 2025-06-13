@@ -1,24 +1,24 @@
 steps:
 # Build Docker image
-- name: 'cicd-app'
-  args: ['build', '-t', 'us-central1-docker.pkg.dev/black-cirrus-461305-f6/cicd-app', './app' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/black-cirrus-461305-f6/cicd-gcp:latest', './app' ]
   id: 'Build Docker Image'
 
 # Push image to Artifact Registry
-- name: 'cicd-app'
-  args: ['push', 'us-central1-docker.pkg.dev/black-cirrus-461305-f6/cicd-app' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/black-cirrus-461305-f6/cicd-gcp:latest' ]
   id: 'Push Docker Image'
 
 # Create Cloud Deploy release
 - name: 'google/cloud-sdk:latest'
   entrypoint: 'sh'
   args:
-  - -xe
-  - -c
+  - -xe # -x: Prints commands as they are executed (for debugging) ; -e: Exits on any error
+  - -c  # Executes the following multi-line shell script
   - |
     gcloud deploy apply --file deploy/pipeline.yaml --region=us-central1
     gcloud deploy apply --file deploy/dev.yaml --region=us-central1
-    gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=gke-cicd-pipeline --region=us-central1 --skaffold-file=skaffold.yaml
+    gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=my-pipeline --region=us-central1
 
 
 options:
