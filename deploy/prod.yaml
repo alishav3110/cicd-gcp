@@ -5,7 +5,8 @@ metadata:
   annotations: {}
   labels: {}
 description: prod
-requireApproval: true
-gke:
-  cluster: projects/prj-poc-001/locations/us-central1-c/clusters/cluster-2
-
+spec:
+  cloudRun:
+    location: us-central1
+  profiles:
+    - prod
