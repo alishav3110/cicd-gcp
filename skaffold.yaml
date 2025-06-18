@@ -1,5 +1,5 @@
 # apiVersion: skaffold/v4beta7
-# kind: Config
+# kind: Config 
 # metadata:
 #   name: cicd-gcp
 # build:
