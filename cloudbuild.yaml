@@ -26,30 +26,8 @@
 #   logging: CLOUD_LOGGING_ONLY
 
 
-# steps:
-# - name: 'google/cloud-sdk:latest'
-#   args: ['gcloud', 'info', '--run-diagnostics']
-# - name: 'gcr.io/cloud-builders/docker'
-#   args: ['build', '-t', 'gcr.io/black-cirrus-461305-f6/cicd-gcp:latest', './app']
-#   id: 'Build Docker Image'
-# - name: 'gcr.io/cloud-builders/docker'
-#   args: ['push', 'gcr.io/black-cirrus-461305-f6/cicd-gcp:latest']
-#   id: 'Push Docker Image'
-# - name: 'google/cloud-sdk:latest'
-#   entrypoint: 'sh'
-#   args:
-#   - -xe
-#   - -c
-#   - |
-#     gcloud deploy apply --file deploy/pipeline.yaml --region=us-central1 --project=black-cirrus-461305-f6
-#     gcloud deploy apply --file deploy/dev.yaml --region=us-central1 --project=black-cirrus-461305-f6 --force
-#     gcloud deploy apply --file deploy/prod.yaml --region=us-central1 --project=black-cirrus-461305-f6 --force
-#     gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=my-pipeline --region=us-central1 --project=black-cirrus-461305-f6
-# options:
-#   logging: CLOUD_LOGGING_ONLY
-
 steps:
-# Build Docker image  
+# Build Docker image
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/black-cirrus-461305-f6/cicd-gcp:latest', './app']
   id: 'Build Docker Image'
@@ -59,7 +37,7 @@ steps:
   args: ['push', 'gcr.io/black-cirrus-461305-f6/cicd-gcp:latest']
   id: 'Push Docker Image'
 
-# Create Cloud Deploy release
+# Create Cloud Deploy release and ensure pipeline/targets are up-to-date
 - name: 'google/cloud-sdk:latest'
   entrypoint: 'sh'
   args:
@@ -67,15 +45,7 @@ steps:
   - -c
   - |
     gcloud deploy apply --file deploy/pipeline.yaml --region=us-central1 --project=black-cirrus-461305-f6
-    # Check if dev target exists, apply only if it doesn't
-    if ! gcloud deploy describe target dev --region=us-central1 --project=black-cirrus-461305-f6 > /dev/null 2>&1; then
-      gcloud deploy apply --file deploy/dev.yaml --region=us-central1 --project=black-cirrus-461305-f6
-    fi
-    # Check if prod target exists, apply only if it doesn't
-    if ! gcloud deploy describe target prod --region=us-central1 --project=black-cirrus-461305-f6 > /dev/null 2>&1; then
-      gcloud deploy apply --file deploy/prod.yaml --region=us-central1 --project=black-cirrus-461305-f6
-    fi
+    # Always apply targets to ensure they are up-to-date with the YAML files
+    gcloud deploy apply --file deploy/dev.yaml --region=us-central1 --project=black-cirrus-461305-f6
+    gcloud deploy apply --file deploy/prod.yaml --region=us-central1 --project=black-cirrus-461305-f6
     gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=my-pipeline --region=us-central1 --project=black-cirrus-461305-f6
-
-options:
-  logging: CLOUD_LOGGING_ONLY
