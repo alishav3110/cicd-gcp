@@ -20,6 +20,4 @@ description: cicd delivery pipeline
 serialPipeline:
   stages:
   - targetId: dev
-    profiles: ["cloudrun"]  # Add this profile
   - targetId: prod
-    profiles: ["cloudrun"]  # Add this profile
