@@ -7,5 +7,5 @@ metadata:
 description: prod
 spec:
   cloudRun:
-    serviceId: my-prod-service
+    serviceId: cicd-gcp-prod-service
     location: us-central1
