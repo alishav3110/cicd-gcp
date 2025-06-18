@@ -1,7 +1,12 @@
 steps:
 # Build Docker image 
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/black-cirrus-461305-f6/cicd-gcp:latest', './app']
+  args: [
+    'build',
+    '-t', 'gcr.io/$PROJECT_ID/cicd-gcp:latest',
+    '-f', 'app/Dockerfile',  # Explicit path to Dockerfile
+    '.'  # Build context is root directory
+  ]
   id: 'Build Docker Image'
 
 # Push image to Artifact Registry
