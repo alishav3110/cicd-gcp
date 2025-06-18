@@ -36,12 +36,12 @@ steps:
     gcloud deploy apply --file deploy/pipeline.yaml --region=us-central1 --project=black-cirrus-461305-f6
     gcloud deploy apply --file deploy/dev.yaml --region=us-central1 --project=black-cirrus-461305-f6
     gcloud deploy apply --file deploy/prod.yaml --region=us-central1 --project=black-cirrus-461305-f6
-    gcloud deploy releases create "app-release-${SHORT_SHA}" \
-      --delivery-pipeline=my-pipeline \
-      --region=us-central1 \
-      --project=black-cirrus-461305-f6 \
-      --images="gcr.io/black-cirrus-461305-f6/cicd-gcp:latest" \
-      --source=.
+    gcloud deploy releases create app-release-${SHORT_SHA} \
+       --delivery-pipeline=my-pipeline \
+       --region=us-central1 \
+       --project=black-cirrus-461305-f6 \
+       --images=app=gcr.io/black-cirrus-461305-f6/cicd-gcp:latest \
+       --source=.
       
 options:
   logging: CLOUD_LOGGING_ONLY
