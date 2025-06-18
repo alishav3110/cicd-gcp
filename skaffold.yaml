@@ -25,12 +25,16 @@
 #         region: "us-central1"  # Must match target region
 #         projectId: "black-cirrus-461305-f6"
 
-apiVersion: skaffold/v3alpha1
+apiVersion: skaffold/v4beta13
 kind: Config
+metadata:
+  name: cicd-gcp
+build:
+  artifacts:
+    - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
 deploy:
-  cloudrun: {}
-profiles:
-- name: cloudrun
-  manifests:
-    rawYaml:
-    - run-cloudrun.yaml
+  cloudrun:
+    services:
+      - name: "cicd-gcp"  # Must match existing Cloud Run service
+        region: "us-central1"
+        projectId: "black-cirrus-461305-f6"
