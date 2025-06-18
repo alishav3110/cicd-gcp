@@ -4,7 +4,7 @@ steps:
   args: [
     'build',
     '-t', 'gcr.io/$PROJECT_ID/cicd-gcp:latest',
-    '-f', 'Dockerfile',  # Changed from app/Dockerfile
+    '-f', 'app/Dockerfile',  # Dockerfile is in app directory
     '.'  # Build context is root directory
   ]
   id: 'Build Docker Image'
