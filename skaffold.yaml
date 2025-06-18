@@ -1,0 +1,18 @@
+apiVersion: skaffold/v4beta7
+kind: Config
+metadata:
+  name: cicd-gcp
+build:
+  artifacts:
+    - image: gcr.io/black-cirrus-461305-f6/cicd-gcp  # Replace with your image
+      docker:
+        dockerfile: app/Dockerfile  # Path to your Dockerfile
+deploy:
+  cloudrun:
+    services:
+      - name: dev  # Must match your target name in dev.yaml
+        projectId: black-cirrus-461305-f6
+        region: us-central1
+      - name: prod  # Must match your target name in prod.yaml
+        projectId: black-cirrus-461305-f6
+        region: us-central1
