@@ -8,5 +8,3 @@ description: prod
 spec:
   cloudRun:
     location: us-central1
-  profiles:
-    - prod
