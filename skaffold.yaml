@@ -19,4 +19,4 @@ build:
   artifacts:
     - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
 deploy:
-  kubectl: {}  # Required empty stub for Cloud Deploy 
+  cloudrun: {}
