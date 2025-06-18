@@ -33,7 +33,13 @@ build:
   artifacts:
     - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
       docker:
-        dockerfile: Dockerfile
+        dockerfile: app/Dockerfile
+      sync:
+        manual:
+          - src: 'app/**/*.py'
+            dest: .
+          - src: 'app/templates/*.html'
+            dest: templates
   googleCloudBuild:
     projectId: black-cirrus-461305-f6
 deploy:
@@ -48,3 +54,18 @@ deploy:
           spec:
             containers:
               - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
+                ports:
+                  - containerPort: 8080
+profiles:
+  - name: dev
+    deploy:
+      cloudrun:
+        service:
+          metadata:
+            name: cicd-gcp-dev
+  - name: prod
+    deploy:
+      cloudrun:
+        service:
+          metadata:
+            name: cicd-gcp-prod
