@@ -25,16 +25,26 @@
 #         region: "us-central1"  # Must match target region
 #         projectId: "black-cirrus-461305-f6"
 
-apiVersion: skaffold/v4beta13
+apiVersion: skaffold/v4beta6
 kind: Config
 metadata:
-  name: cicd-gcp
+  name: cloud-run-app
 build:
   artifacts:
     - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
+      docker:
+        dockerfile: Dockerfile
+  googleCloudBuild:
+    projectId: black-cirrus-461305-f6
 deploy:
   cloudrun:
-    services:
-      - name: "cicd-gcp"  # Must match existing Cloud Run service
-        region: "us-central1"
-        projectId: "black-cirrus-461305-f6"
+    projectId: black-cirrus-461305-f6
+    region: us-central1
+    service:
+      metadata:
+        name: cicd-gcp
+      spec:
+        template:
+          spec:
+            containers:
+              - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
