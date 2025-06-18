@@ -25,14 +25,12 @@
 #         region: "us-central1"  # Must match target region
 #         projectId: "black-cirrus-461305-f6"
 
-apiVersion: skaffold/v4beta2
+apiVersion: skaffold/v3alpha1
 kind: Config
-
-manifests:
-  rawYaml:
-    - resources/*
-
 deploy:
-  cloudrun:
-    projectid: "black-cirrus-461305-f6"
-    region: "us-central1"
+  cloudrun: {}
+profiles:
+- name: cloudrun
+  manifests:
+    rawYaml:
+    - run-cloudrun.yaml
