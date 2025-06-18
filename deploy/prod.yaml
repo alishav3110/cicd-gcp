@@ -1,19 +1,7 @@
-# apiVersion: deploy.cloud.google.com/v1
-# kind: Target
-# metadata:
-#   name: prod
-#   annotations: {}
-#   labels: {}
-# description: prod
-# spec:
-#   cloudRun:
-#     serviceId: cicd-gcp-prod-service
-#     location: us-central1
 apiVersion: deploy.cloud.google.com/v1
 kind: Target
 metadata:
   name: prod
 description: prod
 run:
-  location: us-central1
-  service: cicd-gcp-prod-service
+  location: projects/black-cirrus-461305-f6/locations/us-central1
