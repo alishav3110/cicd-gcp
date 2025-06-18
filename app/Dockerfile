@@ -7,7 +7,7 @@ COPY app/requirements.txt .
 RUN pip install -r requirements.txt
 
 # Copy all app files (relative to Dockerfile location)
-COPY app.py .
+COPY app/app.py .
 COPY . .
 
 CMD ["python", "app.py"]
