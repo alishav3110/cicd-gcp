@@ -22,14 +22,9 @@ metadata:
   name: cicd-gcp
 build:
   artifacts:
-  - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
-    docker:
-      dockerfile: app/Dockerfile  # Path to your Dockerfile
+    - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
+      docker:
+        dockerfile: app/Dockerfile
+# Cloud Deploy handles deployment via targets (dev.yaml/prod.yaml)
 deploy:
-  kubectl:
-    manifests:
-      paths:
-      # This empty section is required for Cloud Run deployments
-      # even though we're not using kubectl directly
-      # Cloud Deploy will override this with Cloud Run configuration
-      # The empty kubectl section satisfies Skaffold's schema requirement
+  kubectl: {}  # Empty but required for Cloud Deploy
