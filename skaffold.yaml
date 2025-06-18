@@ -4,27 +4,19 @@
 #   name: cicd-gcp
 # build:
 #   artifacts:
-#     - image: gcr.io/black-cirrus-461305-f6/cicd-gcp  # Replace with your image
+#     - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
 #       docker:
-#         dockerfile: app/Dockerfile  # Path to your Dockerfile
+#         dockerfile: app/Dockerfile
+# # Cloud Deploy handles deployment via targets (dev.yaml/prod.yaml)
 # deploy:
-#   cloudrun:
-#     services:
-#       - name: dev  # Must match your target name in dev.yaml
-#         projectId: black-cirrus-461305-f6
-#         region: us-central1
-#       - name: prod  # Must match your target name in prod.yaml
-#         projectId: black-cirrus-461305-f6
-#         region: us-central1
-apiVersion: skaffold/v4beta7
+#   kubectl: {}  # Empty but required for Cloud Deploy
+
+apiVersion: skaffold/v4beta13
 kind: Config
 metadata:
   name: cicd-gcp
 build:
   artifacts:
     - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
-      docker:
-        dockerfile: app/Dockerfile
-# Cloud Deploy handles deployment via targets (dev.yaml/prod.yaml)
 deploy:
-  kubectl: {}  # Empty but required for Cloud Deploy
+  kubectl: {}  # Required empty stub for Cloud Deploy
