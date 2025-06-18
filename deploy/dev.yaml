@@ -23,7 +23,5 @@ kind: Target
 metadata:
   name: dev
 description: dev
-gke: {}  # <-- only use this for GKE targets
 run:
-  location: us-central1
-  service: cicd-gcp-dev-service
+  location: projects/black-cirrus-461305-f6/locations/us-central1
