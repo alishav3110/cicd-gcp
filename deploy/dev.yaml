@@ -7,5 +7,5 @@ metadata:
 description: dev
 spec:
   cloudRun:
-    serviceId: my-dev-service
     location: us-central1
+    serviceId: cicd-gcp-dev-service
