@@ -2,11 +2,12 @@ FROM python:3.8
 EXPOSE 8080
 WORKDIR /app
 
-# First copy just requirements.txt
-COPY ../requirements.txt ./  # Note the relative path
+# Copy requirements first (relative to Dockerfile location)
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-# Then copy the rest of the app
-COPY . ./
+# Copy all app files (relative to Dockerfile location)
+COPY app.py .
+COPY . .
 
 CMD ["python", "app.py"]
