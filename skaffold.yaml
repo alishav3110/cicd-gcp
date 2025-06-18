@@ -11,16 +11,28 @@
 # deploy:
 #   kubectl: {}  # Empty but required for Cloud Deploy
 
-apiVersion: skaffold/v4beta13
+# apiVersion: skaffold/v4beta13
+# kind: Config
+# metadata:
+#   name: cicd-gcp
+# build:
+#   artifacts:
+#     - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
+# deploy:
+#   cloudrun:
+#     services:
+#       - name: "cicd-service"  # Your Cloud Run service name
+#         region: "us-central1"  # Must match target region
+#         projectId: "black-cirrus-461305-f6"
+
+apiVersion: skaffold/v4beta2
 kind: Config
-metadata:
-  name: cicd-gcp
-build:
-  artifacts:
-    - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
+
+manifests:
+  rawYaml:
+    - resources/*
+
 deploy:
   cloudrun:
-    services:
-      - name: "cicd-service"  # Your Cloud Run service name
-        region: "us-central1"  # Must match target region
-        projectId: "black-cirrus-461305-f6"
+    projectid: "black-cirrus-461305-f6"
+    region: "us-central1"
