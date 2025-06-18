@@ -38,7 +38,7 @@ steps:
   id: 'Push Docker Image'
 
 # Create Cloud Deploy release and ensure pipeline/targets are up-to-date
-- name: 'google/cloud-sdk:latest'
+- name: 'google/cloud-sdk'
   entrypoint: 'sh'
   args:
   - -xe
