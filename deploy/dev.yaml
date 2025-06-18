@@ -7,4 +7,5 @@ metadata:
 description: dev
 spec:
   cloudRun:
+    serviceId: my-dev-service
     location: us-central1
