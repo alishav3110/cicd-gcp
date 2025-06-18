@@ -18,7 +18,7 @@
 # build:
 #   artifacts:
 #     - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
-# deploy:
+# deploy: 
 #   cloudrun:
 #     services:
 #       - name: "cicd-service"  # Your Cloud Run service name
