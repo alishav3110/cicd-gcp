@@ -3,7 +3,7 @@ EXPOSE 8080
 WORKDIR /app
 
 # Copy requirements first (relative to Dockerfile location)
-COPY requirements.txt .
+COPY app/requirements.txt .
 RUN pip install -r requirements.txt
 
 # Copy all app files (relative to Dockerfile location)
