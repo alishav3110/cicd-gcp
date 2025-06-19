@@ -25,29 +25,38 @@
 #         region: "us-central1"  # Must match target region
 #         projectId: "black-cirrus-461305-f6"
 
-apiVersion: skaffold/v4beta6
+# apiVersion: skaffold/v4beta6
+# kind: Config
+# metadata:
+#   name: cloud-run-app
+# build:
+#   artifacts:
+#     - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
+#       docker:
+#         dockerfile: app/Dockerfile
+#       sync:
+#         manual:
+#           - src: 'app/**/*.py'
+#             dest: .
+#           - src: 'app/templates/*.html'
+#             dest: templates
+#   googleCloudBuild:
+#     projectId: black-cirrus-461305-f6
+# deploy:
+#   cloudrun: {}
+# profiles:
+#   - name: dev
+#     deploy:
+#       cloudrun: {}
+#   - name: prod
+#     deploy:
+#       cloudrun: {}
+
+apiVersion: skaffold/v2beta16
 kind: Config
-metadata:
-  name: cloud-run-app
-build:
-  artifacts:
-    - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
-      docker:
-        dockerfile: app/Dockerfile
-      sync:
-        manual:
-          - src: 'app/**/*.py'
-            dest: .
-          - src: 'app/templates/*.html'
-            dest: templates
-  googleCloudBuild:
-    projectId: black-cirrus-461305-f6
 deploy:
-  cloudrun: {}
-profiles:
-  - name: dev
-    deploy:
-      cloudrun: {}
-  - name: prod
-    deploy:
-      cloudrun: {}
+  cloudrun:
+    services:
+      - name: cicd-gcp
+        image: gcr.io/black-cirrus-461305-f6/cicd-gcp
+        region: us-central1
