@@ -48,6 +48,19 @@
 #     region: us-central1
 #     serviceName: cicd-gcp
 
+# apiVersion: skaffold/v4beta7
+# kind: Config
+# metadata:
+#   name: cicd-gcp
+# build:
+#   artifacts:
+#     - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
+# deploy:
+#   cloudrun:
+#     region: us-central1
+#     projectid: black-cirrus-461305-f6
+#     #servicename: cicd-gcp
+
 apiVersion: skaffold/v4beta7
 kind: Config
 metadata:
@@ -55,8 +68,13 @@ metadata:
 build:
   artifacts:
     - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
+      docker:
+        dockerfile: app/Dockerfile
+manifests:
+  rawYaml:
+    - app/cloudrun-service.yaml # Optional if your image is enough for deploy
 deploy:
   cloudrun:
-    region: us-central1
     projectid: black-cirrus-461305-f6
-    #servicename: cicd-gcp
+    region: us-central1
+    #serviceName: cicd-gcp
