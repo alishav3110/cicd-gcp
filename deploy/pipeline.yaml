@@ -21,14 +21,24 @@
 #   stages:
 #   - targetId: dev
 #   - targetId: prod
+------------------------
+# apiVersion: deploy.cloud.google.com/v1
+# kind: DeliveryPipeline
+# metadata:
+#   name: my-pipeline
+# description: cicd delivery pipeline
+# serialPipeline:
+#   stages:
+#   - targetId: dev
+#     profiles: ["dev"]
+#   - targetId: prod
+#     profiles: ["prod"]
 apiVersion: deploy.cloud.google.com/v1
 kind: DeliveryPipeline
 metadata:
   name: my-pipeline
-description: cicd delivery pipeline
+description: Cloud Run deployment pipeline
 serialPipeline:
   stages:
   - targetId: dev
-    profiles: ["dev"]
   - targetId: prod
-    profiles: ["prod"]
