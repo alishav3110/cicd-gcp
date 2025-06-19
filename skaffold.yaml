@@ -60,3 +60,6 @@ deploy:
       - name: cicd-gcp
         image: gcr.io/black-cirrus-461305-f6/cicd-gcp
         region: us-central1
+        env:
+        - name: DEBUG_MODE
+          value: "true"
