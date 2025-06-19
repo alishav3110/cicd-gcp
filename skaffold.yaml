@@ -12,13 +12,13 @@ kind: Config
 build:
   artifacts:
     - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
-      context: . # Build context (current directory)
+      context: .
       docker:
-        dockerfile: app/Dockerfile # Path to Dockerfile
+        dockerfile: Dockerfile
 profiles:
   - name: dev
     build:
       artifacts:
-        - image: gcr.io/black-cirrus-461305-f6/cicd-gcp-dev # Optional: dev-specific image
+        - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
       local:
-        push: false # Build locally without pushing in dev
+        push: false
