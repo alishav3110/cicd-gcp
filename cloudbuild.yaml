@@ -95,6 +95,7 @@ steps:
     - --images=$_SERVICE_NAME=gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA
     - --to-target=dev
     - --project=$PROJECT_ID
+    # Remove --source and --skaffold-file parameters completely
 
 options:
   logging: CLOUD_LOGGING_ONLY
