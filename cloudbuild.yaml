@@ -143,3 +143,6 @@ steps:
     - --images=cicd-gcp=gcr.io/$PROJECT_ID/cicd-gcp:$COMMIT_SHA
     - --to-target=dev
     - --project=$PROJECT_ID
+
+options:
+  logging: CLOUD_LOGGING_ONLY
