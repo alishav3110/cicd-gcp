@@ -43,11 +43,7 @@ steps:
 #     gcloud deploy apply --file deploy/prod.yaml --region=us-central1 --project=black-cirrus-461305-f6
 #     gcloud deploy releases create 'app-release-${SHORT_SHA}' --project=black-cirrus-461305-f6 --region=us-central1 --delivery-pipeline=my-pipeline --images=gcr.io/black-cirrus-461305-f6/cicd-gcp=gcr.io/black-cirrus-461305-f6/cicd-gcp@sha256:60921f7eb11df34c4c4ee38baa6ff32955f1b03a6ad60a5e2e0bcb1a2c3f1700
 
-# Add explicit render step for debugging
-- name: gcr.io/k8s-skaffold/skaffold
-  entrypoint: /usr/local/bin/skaffold  # Explicit path to skaffold binary
-  args: ['render', '--output', 'rendered-manifests.yaml']
-  id: 'Render Manifests'
+
 
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
   entrypoint: gcloud
@@ -63,11 +59,6 @@ steps:
   - --skaffold-file=skaffold.yaml
   - --source=.
 
-# Store rendered manifests for inspection
-artifacts:
-  objects:
-    location: gs://cicd-gcp/debug-artifacts/
-    paths: ['rendered-manifests.yaml']
 
 options:
   logging: CLOUD_LOGGING_ONLY
