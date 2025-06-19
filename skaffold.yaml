@@ -43,29 +43,11 @@ build:
   googleCloudBuild:
     projectId: black-cirrus-461305-f6
 deploy:
-  cloudrun:
-    projectId: black-cirrus-461305-f6
-    region: us-central1
-    service:
-      metadata:
-        name: cicd-gcp
-      spec:
-        template:
-          spec:
-            containers:
-              - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
-                ports:
-                  - containerPort: 8080
+  cloudrun: {}
 profiles:
   - name: dev
     deploy:
-      cloudrun:
-        service:
-          metadata:
-            name: cicd-gcp-dev
+      cloudrun: {}
   - name: prod
     deploy:
-      cloudrun:
-        service:
-          metadata:
-            name: cicd-gcp-prod
+      cloudrun: {}
