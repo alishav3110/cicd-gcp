@@ -128,8 +128,7 @@ steps:
       gcloud deploy apply --file=deploy/pipeline.yaml --region=us-central1 --project=$PROJECT_ID
       gcloud deploy apply --file=deploy/dev.yaml --region=us-central1 --project=$PROJECT_ID
       gcloud deploy apply --file=deploy/prod.yaml --region=us-central1 --project=$PROJECT_ID
-      gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=my-pipeline --region=us-central1 --project=black-cirrus-461305-f6 --images=app=gcr.io/black-cirrus-461305-f
-6/cicd-gcp:latest --source=.
+      gcloud deploy releases create 'app-release-${SHORT_SHA}' --delivery-pipeline=my-pipeline --region=us-central1 --project=black-cirrus-461305-f6 --images=app=gcr.io/black-cirrus-461305-f6/cicd-gcp:latest --source=.
 
   # Create release with explicit image reference (no Skaffold)
   # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
