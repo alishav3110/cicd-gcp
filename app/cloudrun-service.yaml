@@ -1,10 +1,24 @@
 # app/cloudrun-service.yaml
+# apiVersion: serving.knative.dev/v1
+# kind: Service
+# metadata:
+#   name: cicd-gcp # Choose a unique name for your Cloud Run service
+#   labels:
+#     cloud.googleapis.com/location: us-central1
+# spec:
+#   template:
+#     spec:
+#       containers:
+#         - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
+#           ports:
+#             - containerPort: 8080
+
 apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
-  name: cicd-gcp # Choose a unique name for your Cloud Run service
-  labels:
-    cloud.googleapis.com/location: us-central1
+  name: cicd-gcp
+  annotations:
+    run.googleapis.com/region: us-central1
 spec:
   template:
     spec:
