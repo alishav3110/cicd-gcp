@@ -7,18 +7,19 @@
 #   kubectl:
 #     manifests:
 #       rawYaml: []
-apiVersion: skaffold/v2beta16
+apiVersion: skaffold/v4beta7
 kind: Config
+metadata:
+  name: cicd-gcp
 build:
   artifacts:
     - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
-      context: .
       docker:
-        dockerfile: Dockerfile
-profiles:
-  - name: dev
-    build:
-      artifacts:
-        - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
-      local:
-        push: false
+        dockerfile: app/Dockerfile
+manifests:
+  rawYaml:
+    - app/cloudrun-service.yaml # Point to your Cloud Run service definition
+deploy:
+  kubectl: {} # <--- Use the generic kubectl deployer here.
+              #     Cloud Deploy will use its own mechanism to deploy this
+              #     rendered manifest to Cloud Run, as defined in your target.
