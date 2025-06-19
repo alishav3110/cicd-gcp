@@ -1,0 +1,9 @@
+apiVersion: skaffold/v2beta16
+kind: Config
+build:
+  artifacts:
+  - image: gcr.io/black-cirrus-461305-f6/cicd-gcp
+deploy:
+  kubectl:
+    manifests:
+      rawYaml: []
