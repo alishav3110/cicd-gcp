@@ -52,14 +52,15 @@
 #     deploy:
 #       cloudrun: {}
 
-apiVersion: skaffold/v3alpha1
+apiVersion: skaffold/v2beta16  # Changed from v3alpha1
 kind: Config
 deploy:
-  cloudrun:
+  googleCloudRun:  # Changed from cloudrun
     services:
       - name: cicd-gcp
         image: gcr.io/black-cirrus-461305-f6/cicd-gcp
         region: us-central1
+        projectId: black-cirrus-461305-f6  # Added project ID
         env:
         - name: DEBUG_MODE
           value: "true"
