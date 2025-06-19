@@ -119,7 +119,7 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/cicd-gcp:$COMMIT_SHA']
 
-  # Apply Cloud Deploy configurations
+  # Apply configurations
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: bash
     args:
@@ -129,7 +129,7 @@ steps:
       gcloud deploy apply --file=deploy/dev.yaml --region=us-central1 --project=$PROJECT_ID
       gcloud deploy apply --file=deploy/prod.yaml --region=us-central1 --project=$PROJECT_ID
 
-  # Create Cloud Deploy release (Skaffold-free)
+  # Create release with explicit image reference (no Skaffold)
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
