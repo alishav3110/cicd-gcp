@@ -1,17 +1,22 @@
+substitutions:
+  _SERVICE_NAME: 'cicd-gcp'        # Your Cloud Run service name
+  _DEPLOY_PIPELINE: 'app-pipeline' # Your Cloud Deploy pipeline name
+  _DEPLOY_REGION: 'us-central1'    # Region for Cloud Deploy
+
 steps:
 # Build Docker image 
 - name: 'gcr.io/cloud-builders/docker'
   args: [
     'build',
-    '-t', 'gcr.io/$PROJECT_ID/cicd-gcp:latest',
-    '-f', 'app/Dockerfile',  # Dockerfile is in app directory
-    '.'  # Build context is root directory
+    '-t', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA',
+    '-f', 'app/Dockerfile',
+    '.'
   ]
   id: 'Build Docker Image'
 
 # Push image to Artifact Registry
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/black-cirrus-461305-f6/cicd-gcp:latest']
+  args: ['push', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA']
   id: 'Push Docker Image'
 
 # Create Cloud Deploy release and ensure pipeline/targets are up-to-date
