@@ -119,6 +119,14 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/cicd-gcp:$COMMIT_SHA']
 
+  # Replace image placeholder in cloudrun-service.yaml
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+    - '-c'
+    - |
+      sed -i "s|{{.IMAGE}}|gcr.io/$PROJECT_ID/cicd-gcp:$COMMIT_SHA|g" app/cloudrun-service.yaml
+
   # Apply configurations
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: bash
