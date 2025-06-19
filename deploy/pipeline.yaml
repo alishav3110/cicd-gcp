@@ -33,6 +33,7 @@
 #     profiles: ["dev"]
 #   - targetId: prod
 #     profiles: ["prod"]
+
 apiVersion: deploy.cloud.google.com/v1
 kind: DeliveryPipeline
 metadata:
@@ -40,5 +41,5 @@ metadata:
 description: Cloud Run deployment pipeline
 serialPipeline:
   stages:
-  - targetId: dev
-  - targetId: prod
+    - targetId: dev
+    - targetId: prod
