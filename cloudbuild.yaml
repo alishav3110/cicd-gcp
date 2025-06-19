@@ -62,41 +62,26 @@
 # options:
 #   logging: CLOUD_LOGGING_ONLY
 
-substitutions:
-  _SERVICE_NAME: 'cicd-gcp'
-  _DEPLOY_PIPELINE: 'my-pipeline'
-  _DEPLOY_REGION: 'us-central1'
+# substitutions:
+#   _SERVICE_NAME: 'cicd-gcp'
+#   _DEPLOY_PIPELINE: 'my-pipeline'
+#   _DEPLOY_REGION: 'us-central1'
 
 steps:
   # Build Docker image
   - name: 'gcr.io/cloud-builders/docker'
     args: [
       'build',
-      '-t', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA',
+      '-t', 'gcr.io/$PROJECT_ID/cicd-gcp:$COMMIT_SHA',
       '-f', 'app/Dockerfile',
       '.'
     ]
 
-  # Push image
+  # Push image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA']
+    args: ['push', 'gcr.io/$PROJECT_ID/cicd-gcp:$COMMIT_SHA']
 
-  # # Cloud Deploy release (Skaffold-free)
-  # - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-  #   entrypoint: gcloud
-  #   args:
-  #   - beta
-  #   - deploy
-  #   - releases
-  #   - create
-  #   - release-$COMMIT_SHA
-  #   - --delivery-pipeline=$_DEPLOY_PIPELINE
-  #   - --region=$_DEPLOY_REGION
-  #   - --images=$_SERVICE_NAME=gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA
-  #   - --to-target=dev
-  #   - --project=$PROJECT_ID
-  #   - --source=.
-    # Apply configurations and create release
+  # Cloud Deploy release (Skaffold-free)
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
     entrypoint: bash
     args:
@@ -107,13 +92,13 @@ steps:
       gcloud deploy apply --file=deploy/dev.yaml --region=us-central1 --project=black-cirrus-461305-f6
       gcloud deploy apply --file=deploy/prod.yaml --region=us-central1 --project=black-cirrus-461305-f6
       
-      # Create release without Skaffold
-      gcloud beta deploy releases create release-${SHORT_SHA} \
-        --project=black-cirrus-461305-f6 \
-        --region=us-central1 \
+      # Create release with explicit source and image
+      gcloud beta deploy releases create release-$COMMIT_SHA \
         --delivery-pipeline=my-pipeline \
+        --region=us-central1 \
         --images=cicd-gcp=gcr.io/black-cirrus-461305-f6/cicd-gcp:$COMMIT_SHA \
-        --source=.
+        --source=. \
+        --project=black-cirrus-461305-f6
 
 options:
   logging: CLOUD_LOGGING_ONLY
