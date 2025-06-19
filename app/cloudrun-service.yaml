@@ -23,7 +23,6 @@ spec:
   template:
     spec:
       containers:
-        - containers:
-          - image: "{{.IMAGE}}"
-            ports:
-              - containerPort: 8080
+        - image: "{{.IMAGE}}"
+          ports:
+            - containerPort: 8080
