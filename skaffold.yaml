@@ -52,7 +52,7 @@
 #     deploy:
 #       cloudrun: {}
 
-apiVersion: skaffold/v2beta16
+apiVersion: skaffold/v3alpha1
 kind: Config
 deploy:
   cloudrun:
