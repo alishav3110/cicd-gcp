@@ -1,5 +1,5 @@
 # substitutions:
-#   _SERVICE_NAME: 'cicd-gcp'        # Your Cloud Run service name
+#   _SERVICE_NAME: 'cicd-gcp'        # Your Cloud Run service name 
 #   _DEPLOY_PIPELINE: 'my-pipeline' # Your Cloud Deploy pipeline name
 #   _DEPLOY_REGION: 'us-central1'    # Region for Cloud Deploy
 
