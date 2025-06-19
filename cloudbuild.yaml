@@ -45,7 +45,8 @@ steps:
 
 # Add explicit render step for debugging
 - name: gcr.io/k8s-skaffold/skaffold
-  args: ['render', '--output', 'rendered-manifests.yaml', '--verbosity=info']
+  entrypoint: /usr/local/bin/skaffold  # Explicit path to skaffold binary
+  args: ['render', '--output', 'rendered-manifests.yaml']
   id: 'Render Manifests'
 
 - name: gcr.io/google.com/cloudsdktool/cloud-sdk
