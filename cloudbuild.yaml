@@ -81,21 +81,39 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA']
 
-  # Cloud Deploy release (Skaffold-free)
+  # # Cloud Deploy release (Skaffold-free)
+  # - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  #   entrypoint: gcloud
+  #   args:
+  #   - beta
+  #   - deploy
+  #   - releases
+  #   - create
+  #   - release-$COMMIT_SHA
+  #   - --delivery-pipeline=$_DEPLOY_PIPELINE
+  #   - --region=$_DEPLOY_REGION
+  #   - --images=$_SERVICE_NAME=gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA
+  #   - --to-target=dev
+  #   - --project=$PROJECT_ID
+  #   - --source=.
+    # Apply configurations and create release
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
-    entrypoint: gcloud
+    entrypoint: bash
     args:
-    - beta
-    - deploy
-    - releases
-    - create
-    - release-$COMMIT_SHA
-    - --delivery-pipeline=$_DEPLOY_PIPELINE
-    - --region=$_DEPLOY_REGION
-    - --images=$_SERVICE_NAME=gcr.io/$PROJECT_ID/$_SERVICE_NAME:$COMMIT_SHA
-    - --to-target=dev
-    - --project=$PROJECT_ID
-    - --source=.
+    - -c
+    - |
+      # Apply configurations
+      gcloud deploy apply --file=deploy/pipeline.yaml --region=us-central1 --project=black-cirrus-461305-f6
+      gcloud deploy apply --file=deploy/dev.yaml --region=us-central1 --project=black-cirrus-461305-f6
+      gcloud deploy apply --file=deploy/prod.yaml --region=us-central1 --project=black-cirrus-461305-f6
+      
+      # Create release without Skaffold
+      gcloud beta deploy releases create release-${SHORT_SHA} \
+        --project=black-cirrus-461305-f6 \
+        --region=us-central1 \
+        --delivery-pipeline=my-pipeline \
+        --images=cicd-gcp=gcr.io/black-cirrus-461305-f6/cicd-gcp:$COMMIT_SHA \
+        --source=.
 
 options:
   logging: CLOUD_LOGGING_ONLY
